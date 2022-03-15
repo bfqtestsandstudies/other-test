@@ -6,7 +6,7 @@ on:
     branches: [ sdk ]
       
 jobs:
-  ci-test:
+  ci-test-sdk:
     runs-on: self-hosted
     steps:
       - name: Checkout Source
