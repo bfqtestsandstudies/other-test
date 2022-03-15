@@ -2,11 +2,11 @@ name: CI to Main
 
 on:
   pull_request:
-    types: [ opened, reopened, edited, synchronize ]
+    types: [ opened, reopened, synchronize ]
     branches: [ main ]
       
 jobs:
-  ci-test:
+  ci-test-main:
     runs-on: self-hosted
     steps:
       - name: Checkout Source
