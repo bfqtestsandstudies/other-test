@@ -9,6 +9,7 @@ on:
       - ".github/workflows/ci-microservice-{{MICROSERVICE}}.yaml"
 
 env:
+  TOTAL_COVERAGE: ${{ 0.0 }}
   MINIMUM_COVERAGE: ${{ {{MINIMUM_COVERAGE}} }}
       
 jobs:
@@ -45,13 +46,14 @@ jobs:
             echo "TOTAL_COVERAGE=$(go tool cover -func tmp/coverage.out | tail -1 | grep -o '[0-9.]*%' | awk '{print substr($1, 1, length($1)-1)}')" >> $GITHUB_ENV  
 
       - name: Validate Minimum Coverage
-        if: ${{ env.TOTAL_COVERAGE }} < ${{ env.MINIMUM_COVERAGE }}
+        if: ${{ fromJSON(env.TOTAL_COVERAGE) }} < ${{ fromJSON(env.MINIMUM_COVERAGE) }}
         run: |
             echo "The code doesn't have the expected minimum coverage."
             echo "Coverage ${{env.TOTAL_COVERAGE}} | Minimum ${{env.MINIMUM_COVERAGE}}" 
             exit 1
   
   others-checks:
+    needs: formal-requirements
     runs-on: ubuntu-latest
     steps:
       - name: Set up Go
@@ -59,8 +61,8 @@ jobs:
         with:
           go-version: {{GO_VERSION}}
 
-      # - name: Change Directory
-      #   run: cd microservices/{{MICROSERVICE}}
+      - name: Change Directory
+        run: cd microservices/{{MICROSERVICE}}
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2

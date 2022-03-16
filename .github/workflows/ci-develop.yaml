@@ -31,6 +31,7 @@ jobs:
           fetch-depth: 0 
   
   others-checks:
+    needs: ci-develop
     runs-on: ubunu-latest
     steps:
       - name: Set up Go
