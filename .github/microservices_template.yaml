@@ -64,7 +64,7 @@ jobs:
         uses: golangci/golangci-lint-action@v2
         with:
           version: latest
-          working-directory: microservices/{{MICROSERVICE}}
+          working-directory: microservices/{{MICROSERVICE}}/
 
       - name: Set GO111MODULE on
         run: echo "GO111MODULE=on" >> $GITHUB_ENV

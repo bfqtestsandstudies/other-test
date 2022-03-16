@@ -64,7 +64,7 @@ jobs:
         uses: golangci/golangci-lint-action@v2
         with:
           version: latest
-          working-directory: sdk/sdk1
+          working-directory: sdk/sdk1/
 
       - name: Set GO111MODULE on
         run: echo "GO111MODULE=on" >> $GITHUB_ENV
