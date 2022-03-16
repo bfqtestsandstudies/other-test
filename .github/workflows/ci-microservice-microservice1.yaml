@@ -13,7 +13,7 @@ env:
   MINIMUM_COVERAGE: ${{ 90.0 }}
       
 jobs:
-  ci-microservice-microservice1:
+  formal-requirements:
     runs-on: ubuntu-latest
     steps:
       - name: Get Current Branch Name
@@ -38,28 +38,31 @@ jobs:
         with:
           go-version: 1.17
 
-      - name: Change Directory
-        run: cd microservices/microservice1
-
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v2
-        with:
-          version: latest
-          working-directory: microservices/microservice1/
-
       - name: Create Coverage Reports
         run: |
+            cd microservices/microservice1
             go clean --testcache
             go test -v -race -coverprofile tmp/coverage.out -json ./... >> tmp/report.json
             echo "TOTAL_COVERAGE=$(go tool cover -func tmp/coverage.out | tail -1 | grep -o '[0-9.]*%' | awk '{print substr($1, 1, length($1)-1)}')" >> $GITHUB_ENV
-            echo "Coverage ${{env.TOTAL_COVERAGE}} | Minimum ${{env.MINIMUM_COVERAGE}}"
-            
+            echo "Coverage ${{env.TOTAL_COVERAGE}} | Minimum ${{env.MINIMUM_COVERAGE}}"       
 
       - name: Validate Minimum Coverage
         if: ${{ fromJSON(env.TOTAL_COVERAGE) < fromJSON(env.MINIMUM_COVERAGE) }}
         run: |
             echo "The code doesn't have the expected minimum coverage."
             exit 1
+  
+  others-checks:
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: latest
+          working-directory: microservices/microservice1
 
       - name: Set GO111MODULE on
         run: echo "GO111MODULE=on" >> $GITHUB_ENV
@@ -67,7 +70,7 @@ jobs:
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
         with:
-          args: ./...
+          args: microservices/microservice1
       
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
