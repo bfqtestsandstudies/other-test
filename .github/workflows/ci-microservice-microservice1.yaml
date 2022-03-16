@@ -45,7 +45,6 @@ jobs:
         uses: golangci/golangci-lint-action@v2
         with:
           version: latest
-          only-new-issues: true
           working-directory: microservices/microservice1/
 
       - name: Create Coverage Reports
