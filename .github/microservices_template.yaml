@@ -6,7 +6,7 @@ on:
     branches: [ microservices ]
     paths:
       - "microservices/{{MICROSERVICE}}"
-      - ".github/workflows/ci-microservice-{{MICROSERVICE}}.yaml"
+      - ".github/workflows/ci-microservices-{{MICROSERVICE}}.yaml"
 
 env:
   TOTAL_COVERAGE: 0
