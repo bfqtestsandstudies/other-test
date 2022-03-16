@@ -40,6 +40,7 @@ jobs:
         with:
           version: latest
           only-new-issues: true
+          args: ./...
 
       - name: Set GO111MODULE on
         run: echo "GO111MODULE=on" >> $GITHUB_ENV
