@@ -79,6 +79,12 @@ jobs:
         uses: securego/gosec@master
         with:
           args: microservices/{{MICROSERVICE}}
+
+      - name: Create Coverage Reports
+        run: |
+            cd microservices/{{MICROSERVICE}}
+            go clean --testcache
+            go test -v -race -coverprofile tmp/coverage.out -json ./... >> tmp/report.json
       
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
