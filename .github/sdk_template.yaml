@@ -46,7 +46,7 @@ jobs:
             echo "Coverage ${{env.TOTAL_COVERAGE}} | Minimum ${{env.MINIMUM_COVERAGE}}"    
 
       - name: Validate Minimum Coverage
-        if: ${{ fromJSON(env.TOTAL_COVERAGE) < fromJSON(env.MINIMUM_COVERAGE) }}
+        if: ${{ env.TOTAL_COVERAGE }} < ${{ env.MINIMUM_COVERAGE }}
         run: |
             echo "The code doesn't have the expected minimum coverage."
             exit 1
