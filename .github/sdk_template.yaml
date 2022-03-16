@@ -9,7 +9,6 @@ on:
       - ".github/workflows/ci-sdk-{{SDK}}.yaml"
 
 env:
-  TOTAL_COVERAGE: ${{ 0.0 }}
   MINIMUM_COVERAGE: ${{ {{MINIMUM_COVERAGE}} }}
       
 jobs:
@@ -64,7 +63,7 @@ jobs:
         uses: golangci/golangci-lint-action@v2
         with:
           version: latest
-          working-directory: ./sdk/{{SDK}}/
+          working-directory: /sdk/{{SDK}}/
 
       - name: Set GO111MODULE on
         run: echo "GO111MODULE=on" >> $GITHUB_ENV

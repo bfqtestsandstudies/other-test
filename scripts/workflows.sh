@@ -33,5 +33,5 @@ for MICROSERVICE in ${microservices[@]}; do
     sed "s/{{GO_VERSION}}/${GO_VERSION}/g" |
     sed "s/{{MINIMUM_COVERAGE}}/${MICROSERVICE_COVERAGE}/g")
 
-    echo "${WORKFLOW}" > ../.github/workflows/ci-microservice-${MICROSERVICE}.yaml
+    echo "${WORKFLOW}" > ../.github/workflows/ci-microservices-${MICROSERVICE}.yaml
 done
