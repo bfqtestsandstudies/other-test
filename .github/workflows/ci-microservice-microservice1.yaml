@@ -61,8 +61,10 @@ jobs:
             echo "The code doesn't have the expected minimum coverage."
             exit 1
 
-      - name: Run Gosec Security Scanner
+      - name: Set GO111MODULE on
         run: echo "GO111MODULE=on" >> $GITHUB_ENV
+      
+      - name: Run Gosec Security Scanner
         uses: securego/gosec@master
         with:
           args: ./...
