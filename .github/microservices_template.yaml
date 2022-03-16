@@ -1,0 +1,76 @@
+name: "CI from {{MICROSERVICE}}"
+
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+    branches: [ microservices ]
+    paths:
+      - "microservices/{{MICROSERVICE}}"
+      - ".github/workflows/ci-microservice-{{MICROSERVICE}}.yaml"
+
+env:
+  TOTAL_COVERAGE: ${{ 0.0 }}
+  MINIMUM_COVERAGE: ${{ {{MINIMUM_COVERAGE}} }}
+      
+jobs:
+  ci-microservice-{{MICROSERVICE}}:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Current Branch Name
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
+
+      - name: Permissioned Branch
+        run: |
+            regex_pattern="^(feature[-/])"
+            if [[ "${{ env.BRANCH_NAME }}" =~ $regex_pattern ]]; then 
+            echo "The active branch ${{ env.BRANCH_NAME }} is a valid branch." 
+            else
+            echo "The branch ${{ env.BRANCH_NAME }} is invalid. The pattern expected is feature/*"; exit 1
+            fi
+      
+      - name: Checkout Source
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 
+  
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: {{GO_VERSION}}
+
+      - name: Change Directory
+        run: cd microservices/{{MICROSERVICE}}
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: latest
+          only-new-issues: true
+
+      - name: Create Coverage Reports
+        run: |
+            go clean --testcache
+            go test -v -race -coverprofile tmp/coverage.out -json ./... >> tmp/report.json
+            echo "TOTAL_COVERAGE=$(go tool cover -func tmp/coverage.out | tail -1 | grep -o '[0-9.]*%' | awk '{print substr($1, 1, length($1)-1)}')" >> $GITHUB_ENV
+            echo "Coverage ${{env.TOTAL_COVERAGE}} | Minimum ${{env.MINIMUM_COVERAGE}}"
+            
+
+      - name: Validate Minimum Coverage
+        if: ${{ fromJSON(env.TOTAL_COVERAGE) < fromJSON(env.MINIMUM_COVERAGE) }}
+        run: |
+            echo "The code doesn't have the expected minimum coverage."
+            exit 1
+
+      - name: Set GO111MODULE on
+        run: echo "GO111MODULE=on" >> $GITHUB_ENV
+      
+      - name: Run Gosec Security Scanner
+        uses: securego/gosec@master
+        with:
+          args: ./...
+      
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
