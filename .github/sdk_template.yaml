@@ -9,8 +9,8 @@ on:
       - ".github/workflows/ci-sdk-{{SDK}}.yaml"
 
 env:
-  TOTAL_COVERAGE: 0
-  MINIMUM_COVERAGE: {{MINIMUM_COVERAGE}}
+  TOTAL_COVERAGE: ${{ 0.0 }}
+  MINIMUM_COVERAGE: ${{ {{MINIMUM_COVERAGE}} }}
       
 jobs:
   formal-requirements:
@@ -46,7 +46,7 @@ jobs:
             echo "TOTAL_COVERAGE=$(go tool cover -func tmp/coverage.out | tail -1 | grep -o '[0-9.]*%' | awk '{print substr($1, 1, length($1)-1)}')" >> $GITHUB_ENV    
 
       - name: Validate Minimum Coverage
-        if: (${{ fromJSON(env.TOTAL_COVERAGE) }} < ${{ fromJSON(env.MINIMUM_COVERAGE) }})
+        if: ${{ fromJSON(env.TOTAL_COVERAGE) < fromJSON(env.MINIMUM_COVERAGE) }}
         run: |
             echo "The code doesn't have the expected minimum coverage."
             echo "Coverage ${{env.TOTAL_COVERAGE}} | Minimum ${{env.MINIMUM_COVERAGE}}"
