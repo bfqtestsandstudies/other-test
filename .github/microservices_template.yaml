@@ -56,13 +56,15 @@ jobs:
     needs: formal-requirements
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Source
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 
+
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: {{GO_VERSION}}
-
-      - name: Change Directory
-        run: cd microservices/{{MICROSERVICE}}
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
