@@ -10,7 +10,7 @@ on:
       - ".github/workflows/ci-develop.yaml"
       
 jobs:
-  formal-requirements:
+  ci-develop:
     runs-on: ubunu-latest
     steps:
       - name: Get Current Branch Name
@@ -30,12 +30,14 @@ jobs:
         with:
           fetch-depth: 0 
   
+  others-checks:
+    runs-on: ubunu-latest
+    steps:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: 1.17
 
-  others-checks:
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
         with:
