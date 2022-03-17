@@ -18,11 +18,11 @@ jobs:
 
       - name: Permissioned Branch
         run: |
-            regex_pattern="^(bugfix[-/]|sdk|microservices)"
+            regex_pattern="^(bugfix[-/]|feature[-/]|sdk|microservices)"
             if [[ "${{ env.BRANCH_NAME }}" =~ $regex_pattern ]]; then 
             echo "The active branch ${{ env.BRANCH_NAME }} is a valid branch." 
             else
-            echo "The branch ${{ env.BRANCH_NAME }} is invalid. The pattern expected is bugfix/*, sdk or microservices"; exit 1
+            echo "The branch ${{ env.BRANCH_NAME }} is invalid. The pattern expected is bugfix/*, feature/*, sdk or microservices"; exit 1
             fi
   
   others-checks:
