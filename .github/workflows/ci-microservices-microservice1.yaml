@@ -73,7 +73,7 @@ jobs:
           working-directory: microservices/microservice1
 
       - name: Set GO111MODULE on
-        run: echo "GO111MODULE=on" >> $GITHUB_ENV
+        run: export GO111MODULE=on
       
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
