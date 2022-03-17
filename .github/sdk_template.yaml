@@ -5,7 +5,7 @@ on:
     types: [ opened, reopened, synchronize ]
     branches: [ sdk ]
     paths:
-      - "sdk/{{SDK}}"
+      - "sdk/{{SDK}}/**"
       - ".github/workflows/ci-sdk-{{SDK}}.yaml"
 
 defaults:

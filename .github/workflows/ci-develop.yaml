@@ -5,8 +5,8 @@ on:
     types: [ opened, reopened, synchronize ]
     branches: [ develop ]
     paths:
-      - "microservices/"
-      - "sdk/"
+      - "microservices/**"
+      - "sdk/**"
       - ".github/workflows/ci-develop.yaml"
 
 env:
