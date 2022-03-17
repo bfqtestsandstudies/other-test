@@ -18,7 +18,6 @@ linters:
     - prealloc
     - rowserrcheck
     - misspell
-    - gosec
     - unconvert
     - errcheck
     - deadcode
