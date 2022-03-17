@@ -16,6 +16,8 @@ defaults:
 env:
   TOTAL_COVERAGE: ${{ 0.0 }}
   MINIMUM_COVERAGE: ${{ 90.0 }}
+  GO111MODULE: on
+          
       
 jobs:
   formal-requirements:
@@ -67,8 +69,6 @@ jobs:
           
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
-        env:
-          GO111MODULE: on
         with:
           args: microservices/microservice1/...
 

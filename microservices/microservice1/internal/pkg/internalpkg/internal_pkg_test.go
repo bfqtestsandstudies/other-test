@@ -1,4 +1,4 @@
-package pkg
+package internalpkg
 
 import "testing"
 
