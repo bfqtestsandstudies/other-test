@@ -1,0 +1,35 @@
+run:
+  timeout: 2m
+  tests: true
+
+linters-settings:
+  govet:
+    check-shadowing: true
+  misspell:
+    locale: US
+
+linters:
+  enable:
+    - errorlint
+    - goerr113
+    - nilerr
+    - bodyclose
+    - goconst
+    - prealloc
+    - rowserrcheck
+    - misspell
+    - gosec
+    - unconvert
+    - errcheck
+    - deadcode
+    - unused
+
+output:
+  format: 'colored-line-number'
+  print-issued-lines: true
+  print-linter-name: true
+
+skip-dirs:
+  #- path/of/dir
+skip-files:
+  #- ".*\\.pb\\.go$"
