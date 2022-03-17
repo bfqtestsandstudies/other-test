@@ -11,7 +11,7 @@ on:
       
 jobs:
   ci-develop:
-    runs-on: ubunu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Get Current Branch Name
         run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
@@ -24,33 +24,24 @@ jobs:
             else
             echo "The branch ${{ env.BRANCH_NAME }} is invalid. The pattern expected is bugfix/*, sdk or microservices"; exit 1
             fi
-      
+  
+  others-checks:
+    needs: ci-develop
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout Source
         uses: actions/checkout@v2
         with:
           fetch-depth: 0 
-  
+
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: 1.17
-
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v2
-        with:
-          version: latest
-          only-new-issues: true
-
-      - name: Set GO111MODULE on
-        run: echo "GO111MODULE=on" >> $GITHUB_ENV
       
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
+        env:
+          GO111MODULE: on
         with:
           args: ./...
-      
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
