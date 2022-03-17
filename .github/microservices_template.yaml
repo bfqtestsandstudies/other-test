@@ -78,7 +78,7 @@ jobs:
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
         with:
-          args: microservices/{{MICROSERVICE}}
+          args: microservices/{{MICROSERVICE}}/...
 
       - name: Create Coverage Reports
         run: |
