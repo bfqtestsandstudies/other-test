@@ -18,3 +18,9 @@ report:
 	go test -v -coverprofile tmp/coverage.out -json ./... >> tmp/report.json
 
 all: test lint report
+
+# Gerenate CI workflows
+.PHONY: workflows
+workflows:
+	@echo "Generating CI workflows"
+	@cd scripts && ./workflows.sh

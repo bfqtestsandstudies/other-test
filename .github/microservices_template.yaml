@@ -83,7 +83,6 @@ jobs:
           version: latest
           working-directory: microservices/{{MICROSERVICE}}
       
-
       - name: Create Coverage Reports
         run: |
             go clean --testcache
