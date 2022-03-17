@@ -71,12 +71,11 @@ jobs:
         with:
           version: latest
           working-directory: sdk/{{SDK}}
-
-      - name: Set GO111MODULE on
-        run: export GO111MODULE=on
       
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
+        env:
+          GO111MODULE: on
         with:
           args: sdk/{{SDK}}/...
 
