@@ -84,7 +84,7 @@ jobs:
         env:
           GO111MODULE: on
         with:
-          args: ./...
+          args: sdk/sdk1
 
       - name: Create Coverage Reports
         run: |
