@@ -8,6 +8,9 @@ on:
       - "sdk/sdk1"
       - ".github/workflows/ci-sdk-sdk1.yaml"
 
+defaults:
+  working-directory: sdk/sdk1
+
 env:
   TOTAL_COVERAGE: ${{ 0.0 }}
   MINIMUM_COVERAGE: ${{ 90.0 }}
@@ -40,7 +43,6 @@ jobs:
 
       - name: Create Coverage Reports
         run: |
-            cd sdk/sdk1
             go clean --testcache
             go test -v -race -coverprofile tmp/coverage.out -json ./... >> tmp/report.json
             echo "TOTAL_COVERAGE=$(go tool cover -func tmp/coverage.out | tail -1 | grep -o '[0-9.]*%' | awk '{print substr($1, 1, length($1)-1)}')" >> $GITHUB_ENV    
@@ -70,25 +72,21 @@ jobs:
         uses: golangci/golangci-lint-action@v2
         with:
           version: latest
-          working-directory: sdk/sdk1
       
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
         env:
           GO111MODULE: on
         with:
-          args: sdk/sdk1/...
+          args: ./...
 
       - name: Create Coverage Reports
         run: |
-            cd sdk/sdk1
             go clean --testcache
             go test -v -race -coverprofile tmp/coverage.out -json ./... >> tmp/report.json
       
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
-        with:
-          projectBaseDir: sdk/sdk1
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
