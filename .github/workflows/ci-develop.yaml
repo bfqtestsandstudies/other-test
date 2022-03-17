@@ -48,6 +48,8 @@ jobs:
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
+        env:
+          GO111MODULE: off
         with:
           version: latest
           working-directory: ./
