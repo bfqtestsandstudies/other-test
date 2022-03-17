@@ -74,7 +74,7 @@ jobs:
         uses: golangci/golangci-lint-action@v2
         with:
           version: latest
-          working-directory: .
+          working-directory: sdk/sdk1
       
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
