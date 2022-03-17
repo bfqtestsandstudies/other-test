@@ -76,12 +76,12 @@ jobs:
           version: latest
           working-directory: microservices/microservice1
       
-      - name: Run Gosec Security Scanner
-        uses: securego/gosec@master
-        env:
-          GO111MODULE: on
-        with:
-          args: microservices/microservice1/...
+      # - name: Run Gosec Security Scanner
+      #   uses: securego/gosec@master
+      #   env:
+      #     GO111MODULE: on
+      #   with:
+      #     args: microservices/microservice1/...
 
       - name: Create Coverage Reports
         run: |
