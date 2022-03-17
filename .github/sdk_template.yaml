@@ -76,12 +76,12 @@ jobs:
           version: latest
           working-directory: sdk/{{SDK}}
       
-      - name: Run Gosec Security Scanner
-        uses: securego/gosec@master
-        env:
-          GO111MODULE: on
-        with:
-          args: sdk/{{SDK}}/...
+      # - name: Run Gosec Security Scanner
+      #   uses: securego/gosec@master
+      #   env:
+      #     GO111MODULE: on
+      #   with:
+      #     args: sdk/{{SDK}}/...
 
       - name: Create Coverage Reports
         run: |
