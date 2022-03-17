@@ -25,23 +25,23 @@ jobs:
             echo "The branch ${{ env.BRANCH_NAME }} is invalid. The pattern expected is bugfix/*, sdk or microservices"; exit 1
             fi
   
-  others-checks:
-    needs: ci-develop
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Source
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0 
+  # others-checks:
+  #   needs: ci-develop
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout Source
+  #       uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0 
 
-      - name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: 1.17
+  #     - name: Set up Go
+  #       uses: actions/setup-go@v2
+  #       with:
+  #         go-version: 1.17
       
-      - name: Run Gosec Security Scanner
-        uses: securego/gosec@master
-        env:
-          GO111MODULE: on
-        with:
-          args: ./...
+  #     - name: Run Gosec Security Scanner
+  #       uses: securego/gosec@master
+  #       env:
+  #         GO111MODULE: on
+  #       with:
+  #         args: ./...
