@@ -8,11 +8,6 @@ on:
       - "sdk/{{SDK}}"
       - ".github/workflows/ci-sdk-{{SDK}}.yaml"
 
-defaults:
-  run:
-    shell: bash
-    working-directory: sdk/{{SDK}}
-
 env:
   TOTAL_COVERAGE: ${{ 0.0 }}
   MINIMUM_COVERAGE: ${{ {{MINIMUM_COVERAGE}} }}
@@ -20,6 +15,10 @@ env:
 jobs:
   formal-requirements:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: sdk/{{SDK}}
     steps:
       - name: Checkout Source
         uses: actions/checkout@v2
@@ -59,6 +58,10 @@ jobs:
   others-checks:
     needs: formal-requirements
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: sdk/{{SDK}}
     steps:
       - name: Checkout Source
         uses: actions/checkout@v2
