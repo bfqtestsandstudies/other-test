@@ -9,7 +9,8 @@ on:
       - ".github/workflows/ci-sdk-{{SDK}}.yaml"
 
 defaults:
-  working-directory: sdk/{{SDK}}
+  run:
+    working-directory: sdk/{{SDK}}
 
 env:
   TOTAL_COVERAGE: ${{ 0.0 }}
