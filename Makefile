@@ -24,3 +24,8 @@ all: test lint report
 workflows:
 	@echo "Generating CI workflows"
 	@cd scripts && ./workflows.sh
+
+.PHONY: generate-cover
+generate-cover:
+	#@go test -coverprofile=banking.out -v github.com/avenuesec/banking/... -short
+	@go test -coverprofile=teste.out -v ./sdk/sdk1/... -short
