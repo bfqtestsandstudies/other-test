@@ -7,6 +7,7 @@ on:
     paths:
       - "sdk/sdk1/**"
       - ".github/workflows/ci-sdk-sdk1.yaml"
+  workflow_dispatch:
 
 defaults:
   run:
