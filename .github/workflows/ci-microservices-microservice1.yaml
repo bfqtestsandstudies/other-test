@@ -1,9 +1,10 @@
 name: "CI from microservice1"
 
 on:
+  push:
+    branches: [ microservices ]
   pull_request:
     types: [ opened, reopened, synchronize ]
-    branches: [ microservices ]
     paths:
       - "microservices/microservice1/**"
       - ".github/workflows/ci-microservices-microservice1.yaml"
@@ -83,7 +84,6 @@ jobs:
           version: latest
           working-directory: microservices/microservice1
       
-
       - name: Create Coverage Reports
         run: |
             go clean --testcache

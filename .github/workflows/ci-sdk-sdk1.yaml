@@ -1,13 +1,13 @@
 name: "CI from sdk1"
 
 on:
+  push:
+    branches: [ sdk ]
   pull_request:
     types: [ opened, reopened, synchronize ]
-    branches: [ sdk ]
     paths:
       - "sdk/sdk1/**"
       - ".github/workflows/ci-sdk-sdk1.yaml"
-  workflow_dispatch:
 
 defaults:
   run:
@@ -37,7 +37,7 @@ jobs:
             if [[ "${{ env.BRANCH_NAME }}" =~ $regex_pattern ]]; then 
             echo "The active branch ${{ env.BRANCH_NAME }} is a valid branch." 
             else
-            echo "The branch ${{ env.BRANCH_NAME }} is invalid. The pattern expected is feature/*..."; exit 1
+            echo "The branch ${{ env.BRANCH_NAME }} is invalid. The pattern expected is feature/*"; exit 1
             fi
   
       - name: Set up Go

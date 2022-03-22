@@ -1,9 +1,10 @@
 name: "CI from {{SDK}}"
 
 on:
+  push:
+    branches: [ sdk ]
   pull_request:
     types: [ opened, reopened, synchronize ]
-    branches: [ sdk ]
     paths:
       - "sdk/{{SDK}}/**"
       - ".github/workflows/ci-sdk-{{SDK}}.yaml"
